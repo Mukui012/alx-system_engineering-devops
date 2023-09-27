@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# script that configures a new Ubuntu machine
+
+sudo apt-get update
+sudo apt-get install -y nginx
+
+echo "Hello World!" | sudo tee /var/www/html/index.html
+link="server_name _;\n\trewrite ^\/redirect_me https:\/\/https://www.youtube.com/watch?v=xBF3dXjYY38 permanent;"
+sudo sed -i "s/server_name _;/$link/" /etc/nginx/sites-enabled/default
+
+sudo service nginx restart
