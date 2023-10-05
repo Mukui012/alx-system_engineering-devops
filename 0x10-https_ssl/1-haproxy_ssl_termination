@@ -2,23 +2,23 @@
 # configure domain zone
 
 splitter () {
-    TEMP=$(dig "$sub_domain" | grep -X1 'ANSWER SECTION:' | tail -1)
-    X=$(echo "$TEMP" | awk '{ print $4 }')
-    Y=$(echo "$TEMP" | awk '{ print $5 }')
+    TEMP=$(dig "$SUBD" | grep -A1 'ANSWER SECTION:' | tail -1)
+    A=$(echo "$TEMP" | awk '{ print $4 }')
+    B=$(echo "$TEMP" | awk '{ print $5 }')
 }
 
 if [ $# -eq 2 ]
 then
-    S="$2.$1"
-    splitter "$sub_domain"
-    echo "The subdomain $2 is a $X record and points to $Y"
+    SUBD="$2.$1"
+    splitter "$SUBD"
+    echo "The subdomain $2 is a $A record and points to $B"
 elif [ $# -eq 1 ]
 then
     ARR=('www' 'lb-01' 'web-01' 'web-02')
     for i in "${ARR[@]}"
     do
-        sub_domain="$i.$1"
-        splitter "$sub_domain"
-        echo "The subdomain $i is a $X record and points to $Y"
+        SUBD="$i.$1"
+        splitter "$SUBD"
+        echo "The subdomain $i is a $A record and points to $B"
     done
 fi
